@@ -94,7 +94,7 @@ const Calendar: React.FC = () => {
   };
 
   return (
-    <div className="h-screen flex">
+    <div className="flex flex-col h-full">
       <CalendarHeader 
         currentDate={currentDate}
         onPrevious={handlePrevious}

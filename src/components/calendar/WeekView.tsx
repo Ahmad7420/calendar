@@ -19,7 +19,7 @@ export const WeekView: React.FC<WeekViewProps> = ({ currentDate, events }) => {
     return date;
   });
 
-  // Create hours for the day (8 AM to 12 PM)
+  // Create hours for the day (8 AM to 7 PM)
   const hours = Array.from({ length: 12 }, (_, i) => {
     const hour = i + 8; // Starting from 8 AM
     return hour >= 12 ? `${hour === 12 ? 12 : hour - 12} PM` : `${hour} AM`;
@@ -57,9 +57,9 @@ export const WeekView: React.FC<WeekViewProps> = ({ currentDate, events }) => {
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-280px)] overflow-auto">
+    <div className="flex flex-col h-full overflow-auto">
       {/* Week Header */}
-      <div className="flex border-b min-w-[800px]">
+      <div className="flex border-b min-w-[800px] sticky top-0 bg-background z-10">
         <div className="w-16 flex-shrink-0"></div>
         {days.map((day, index) => {
           const { dayName, dayNumber } = formatDayHeader(day);
@@ -67,9 +67,13 @@ export const WeekView: React.FC<WeekViewProps> = ({ currentDate, events }) => {
           
           return (
             <div key={index} className="flex-1 px-2 py-3 text-center">
-              <div className="text-xs text-muted-foreground">{dayName} {dayNumber}</div>
-              {isToday && (
+              <div className="text-xs text-muted-foreground">{dayName}</div>
+              {isToday ? (
                 <div className="w-7 h-7 bg-primary text-primary-foreground rounded-full flex items-center justify-center mx-auto mt-1 text-xs">
+                  {dayNumber}
+                </div>
+              ) : (
+                <div className="w-7 h-7 flex items-center justify-center mx-auto mt-1 text-xs">
                   {dayNumber}
                 </div>
               )}
@@ -79,9 +83,9 @@ export const WeekView: React.FC<WeekViewProps> = ({ currentDate, events }) => {
       </div>
 
       {/* Time Grid */}
-      <div className="flex flex-grow min-w-[800px]">
+      <div className="flex flex-grow min-w-[800px] relative">
         {/* Time Labels */}
-        <div className="w-16 flex-shrink-0 border-r">
+        <div className="w-16 flex-shrink-0 border-r sticky left-0 bg-background z-10">
           {hours.map((hour, index) => (
             <div key={index} className="h-[60px] border-b px-2 py-1">
               <div className="text-xs text-muted-foreground">{hour}</div>
